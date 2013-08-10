@@ -1,6 +1,19 @@
 Game = Game || {};
 
 Game.setupPlayerComponent = function(){
+    Crafty.c("Guardian", {
+      x:1100,
+      y:0,
+      h:100,
+      w:100,
+      init: function() {
+        this.bind("GuardianOpen", this.handleComplete);
+        this.open = false;
+      },
+      handleComplete: function() {
+        this.open = true;
+      }
+    });
 
     // Player component - for handling moving player on screen
     Crafty.c("Snowden", {

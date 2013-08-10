@@ -7,15 +7,19 @@ Game.loadSprites = function(){
     },2);
 
     Crafty.sprite(20,25,"./web/images/freedomCorp.png",{
-        FreedomCorpPic : [0,0]
+        FreedomCorpPic: [0,0]
     });
 
     Crafty.sprite(1, "./web/images/wall.png", {
-        WallPic : [0,0,70,70]
+        WallPic: [0,0,20,25]
     });
 
     Crafty.sprite(1, "./web/collectable/coffee.png", {
-        CoffeeCup : [0,0,16,18]
+        CoffeeCup: [0,0,16,18]
+    });
+
+    Crafty.sprite(1, "./web/collectable/doc.png", {
+        Document: [0,0,14,16]
     });
 
     Crafty.sprite(1, "./web/images/alien.png", {

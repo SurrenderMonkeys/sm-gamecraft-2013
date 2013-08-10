@@ -22,6 +22,18 @@ Game.setupEnvironmentComponents = function(){
         }
     });
 
+    Crafty.c("Documents", {
+        init: function(){
+          var positions = [{x:400,y:100},{x:1100,y:100},{x:240,y:700},{x:1000,y:750},{x:500,y:500}];
+
+          for (var i = positions.length - 1; i >= 0; i--) {
+            pos = positions[i];
+            Crafty.e("2D, DOM, Document").attr({x: pos.x, y: pos.y, z: 1});
+          }
+        }
+    });
+
+
     Crafty.c("Boundaries", {
         init: function() {
             for (var x = 0; x < Game.width/Game.tile_width; x++) {
