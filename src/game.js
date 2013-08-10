@@ -160,7 +160,7 @@ Game.setupEngine = function () {	// this is pure JavaScript that says that when 
     Crafty.scene("game", function () { // the scene is called "game"
 
         // set background
-        Crafty.background("url(background.jpg)"); // this sets the background to a static image
+        Crafty.background("#FFF"); // this sets the background to a static image
 
         // make player entity
         Crafty.e("2D, Canvas, Player").attr({ x: 300, y: 500, z:5 });
