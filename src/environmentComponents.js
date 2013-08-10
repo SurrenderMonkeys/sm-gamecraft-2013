@@ -11,6 +11,14 @@ Game.setupEnvironmentComponents = function(){
         }
     });
 
+    Crafty.c("Coffee", {
+        x: 100,
+        y: 100,
+        init: function(){
+            this.addComponent("CoffeeCup");
+        }
+    });
+
     Crafty.c("Boundaries", {
         init: function() {
             for (var x = 0; x < Game.width/Game.tile_width; x++) {
@@ -36,7 +44,6 @@ Game.setupEnvironmentComponents = function(){
             }
         }
     });
-
 
     // Bits component - for handling Bitss
     Crafty.c("Bits", {

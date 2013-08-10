@@ -48,6 +48,7 @@ Game.setupEngine = function () {
     Game.obstacles = ["Wall","Boundary"];
     Game.evilComponents = ["Alien","Shot","FreedomCorp"];
     Game.collectables = ["Bitcoin"];
+    Game.lives = ["Coffee"];
 
 
     Crafty.viewport.init(600, 400);
@@ -67,6 +68,7 @@ Game.setupEngine = function () {
 
         Crafty.e("2D, Canvas, Bitcoins");
 
+        Crafty.e("2D, Canvas, Coffee");
 
         Game.createAlienComponent();
         Game.createFreedomCorpComponent().attr({x:100,y:100});

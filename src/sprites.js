@@ -14,6 +14,10 @@ Game.loadSprites = function(){
         WallPic : [0,0,70,70]
     });
 
+    Crafty.sprite(1, "./web/collectable/coffee.png", {
+        CoffeeCup : [0,0,16,18]
+    });
+
     Crafty.sprite(1, "./web/images/alien.png", {
         AlienPic: [0,0,52,42]
     });
