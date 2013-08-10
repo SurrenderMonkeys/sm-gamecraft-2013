@@ -29,4 +29,8 @@ Game.loadSprites = function(){
     Crafty.sprite(1,"./web/images/Skull.png",{
         SkullPic : [0,0,57,17]
     });
+
+    Crafty.sprite(20,25,"./web/images/freedomCorp.png",{
+        freedomCorp : [0,0]
+    });
 };
