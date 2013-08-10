@@ -100,7 +100,7 @@ Game.setupPlayerComponent = function(){
                 Crafty.e("2D, Canvas, Heart")
             ];
             this.heartBarOffset = {x: -8, y:-8};
-
+            this.documentCount = 0;
         },
         handlebase: function() { // runs every frame
             var that = this;
