@@ -1,4 +1,4 @@
-Game = {};
+var Game = window.Game || {};
 
 Game.loadSprites = function(){
     Crafty.sprite(1, "./web/images/wall.png", {
@@ -89,13 +89,8 @@ Game.setupEngine = function () {
         }
     });
 
-    Crafty.c("Wall",{
-        x:200,
-        y:200,
-        init: function(){
-            this.addComponent("WallPic");
-        }
-    });
+    // collidable objects
+    new Game.Collidable("Wall", ["WallPic"], {x: 200, y: 200});
 
     // Shot component - for handling shots
     Crafty.c("Shot", {
