@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="http://cdn.craftycomponents.com/crafty-release.js"></script>
+<script type="text/javascript" src="./src/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="./src/crafty-release.js"></script>
 
 <script type="text/javascript" src="./src/game.js"></script>
 
 <script type="text/javascript">
     //initialize
     $(document).ready(function () {
-        Game.setupEngine();
+        Game.setupEngine(Crafty);
     });
 </script>
 
@@ -18,7 +18,7 @@
 </head>
 
 
-<body style="background-color:lightgray">
+<body style="background-color:lightgray;overflow:visible">
 <h3 style="text-align: center;"> Invader </h3>
 
 <p style="text-align: center; font-size:14px;">Arrows or A/D to move, space to fire</p>
