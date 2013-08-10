@@ -1,29 +1,6 @@
-/*
-
- Invader
- (c) 2013 by Dave Dobson
- Permission to use, modify, or copy this code is given freely.
-
- This is a basic CraftyJS JavaScript program that shows how to set Crafty up and create entitities
- There are four types of entities - a ship controlled by the player, shots, an alien, and exploded bits
- It uses these standard components:
- Twoway to move the ship
- Keyboard to look for the space bar to be pressed to shoot
- Collision to see if the shots hit the alien
- 2D and Canvas to draw game entities on the stage
-
- It also uses Crafty.math.randomInt to create random numbers
-
- To run, it needs the CraftyJS library (it was written for version 0.5.3), some external art files, and
- an HTML page that sets up the Crafty stage.  All of those are available at
-
- http://planktongames.com/invader
-
-
- */
 Game = {};
 
-Game.setupEngine = function () {	// this is pure JavaScript that says that when our web page loads, we should run this code.
+Game.setupEngine = function () {
 
     //start crafty with a 600x600 active display area or "stage"
     Crafty.init(600, 600);
@@ -31,7 +8,7 @@ Game.setupEngine = function () {	// this is pure JavaScript that says that when 
     // Loading sprites (graphic images)
 
     Crafty.sprite(1, "./web/images/player.png", { // player base
-        PlayerPic: [0,0,80,60]
+        PlayerPic: [0,0,57,71]
     });
 
     Crafty.sprite(1, "./web/images/alien.png", {	// enemy
@@ -47,7 +24,7 @@ Game.setupEngine = function () {	// this is pure JavaScript that says that when 
     });
 
     // Player component - for handling moving player on screen
-    Crafty.c("Player", {
+    Crafty.c("Snowden", {
         dx: 0, // setting initial vertical speed - note variables are set differently here
 
         init: function() {  // init function is automatically run when entity with this component is created
@@ -55,13 +32,20 @@ Game.setupEngine = function () {	// this is pure JavaScript that says that when 
             this.bind("KeyDown",this.handlekey); // bind the EnterFrame event to the "handlebase" function below
 
             this.addComponent("PlayerPic"); // add the player picture to this entity
-            this.addComponent("Twoway");  // add the twoway control component
-            this.addComponent("Gravity");
-            this.twoway(4,0); // set two-way velocity to 4 pixels per frame sideways, jump speed to zero
+            this.addComponent("Collision");
+            this.addComponent("Fourway");
+            this.fourway(4,0);
+
+            this.onHit("Alien",function(){
+                this.x = 0 ;
+                this.y = 0 ;
+            });
         },
         handlebase: function() { // runs every frame
             if (this.x < 0) this.x = 0; // stop left
             if (this.x > 520) this.x = 520; // stop right
+            if (this.y < 0 ) this.y = 0;
+            if(this.y>520) this.y= 520;
         },
         handlekey: function(keyevent) { // handles key events
             if(keyevent.keyCode === Crafty.keys.SPACE) { // they hit space
@@ -163,7 +147,7 @@ Game.setupEngine = function () {	// this is pure JavaScript that says that when 
         Crafty.background("#FFF"); // this sets the background to a static image
 
         // make player entity
-        Crafty.e("2D, Canvas, Player").attr({ x: 300, y: 500, z:5 });
+        Crafty.e("2D, Canvas, Snowden").attr({ x: 300, y: 500, z:5 });
 
         // make alien entity (coordinates are set in component's init function)
         Crafty.e("2D, Canvas, Alien");
