@@ -48,7 +48,7 @@ Game.setupEngine = function () {
     Game.components();
 
     Game.obstacles = ["Wall","Boundary"];
-    Game.evilComponents = ["Alien","Shot","FreedomCorp"];
+    Game.evilComponents = ["Shot","FreedomCorp"];
 
     Crafty.viewport.init(600, 400);
 
@@ -70,8 +70,8 @@ Game.setupEngine = function () {
         Crafty.e("2D, Canvas, Coffee");
         Crafty.e("2D, Canvas, Documents");
 
-        Game.createAlienComponent();
-        Game.createFreedomCorpComponent().attr({x:320,y:200});
+        //Game.createAlienComponent();
+        Game.createFreedomCorpComponent().attr({x:100,y:100});
 
         Crafty.e("2D, Canvas, Guardian, Color, Solid").color('#ff0');
 

@@ -62,11 +62,17 @@ Game.setupEnvironmentComponents = function(){
 
     Crafty.c("Bitcoins", {
         init: function() {
-            for (var i = 1; i < Game.height/Game.tile_height; i++) {
-                for (var j = 1; j < Game.width/Game.tile_width; j++) {
-                    if (i > 1 && i < Game.height/Game.tile_height && j > 1 && j < Game.width/Game.tile_width && Math.random() < 0.02) {
-                        Crafty.e("2D, DOM, Coin")
-                        .attr({x: j * 16, y: i * 16});
+            var count = 0;
+            while (count < 50) {
+                for (var i = 1; i < Game.height/Game.tile_height; i++) {
+                    for (var j = 1; j < Game.width/Game.tile_width; j++) {
+                        if (Game.MapData[i][j] === 1) {
+                            if (i > 1 && i < Game.height/Game.tile_height && j > 1 && j < Game.width/Game.tile_width && Math.random() < 0.02) {
+                                Crafty.e("2D, DOM, Coin")
+                                .attr({x: (j * Game.tile_width), y: (i * Game.tile_height) - 40});
+                                count = count + 1;
+                            }
+                        }
                     }
                 }
             }

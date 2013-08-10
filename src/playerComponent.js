@@ -7,7 +7,7 @@ Game.setupPlayerComponent = function(){
       h:100,
       w:100,
       init: function() {
-        this.bind("GuardianOpen", this.handleComplete);
+        this.bind("guardian:open", this.handleComplete);
         this.open = false;
       },
       handleComplete: function() {
@@ -36,6 +36,7 @@ Game.setupPlayerComponent = function(){
                     that.heartBar.pop().destroy();
 
                     if(that.heartBar.length<=0){
+                        Crafty.trigger("game:over");
                         Crafty.e("2D, Canvas, Skull").attr({x:that.x+8,y:that.y+5,z:that.z-3});
                         that.destroy();
                     }
@@ -65,6 +66,24 @@ Game.setupPlayerComponent = function(){
                 });
             });
 
+            that.onHit("Guardian", function(obj) {
+              office = obj[0].obj;
+              if(office.open){
+                Crafty.trigger('game:won');
+              }
+            });
+
+            that.onHit("Document", function(doc){
+              if(that.documentCount < 5){
+                that.documentCount++;
+                doc[0].obj.destroy();
+              }
+
+              if(that.documentCount == 5){
+                Crafty.trigger('guardian:open');
+              }
+            });
+
             that.onHit("CoffeeCup", function(collidingComponent){
               if(that.heartBar.length<3){
                 that.heartBar.push(Crafty.e("2D, Canvas, Heart"));
@@ -83,7 +102,7 @@ Game.setupPlayerComponent = function(){
                 Crafty.e("2D, Canvas, Heart")
             ];
             this.heartBarOffset = {x: -8, y:-8};
-
+            this.documentCount = 0;
         },
         handlebase: function() { // runs every frame
             var that = this;
