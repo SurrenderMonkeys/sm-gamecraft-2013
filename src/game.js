@@ -9,9 +9,11 @@ Game.components = function(){
     Crafty.c('Grid', {
       init: function() {
         this.attr({
+
           w: Game.tile_width,
           h: Game.tile_height
-        })
+        });
+        this.addComponent("WallPic");
       },
 
       // Locate this entity at the given position on the grid
@@ -27,8 +29,7 @@ Game.components = function(){
 
     Crafty.c('Boundary', {
       init: function() {
-        this.requires('2D, Canvas, Grid, Color, Solid')
-          .color('#000');
+        this.requires('2D, Canvas, Grid')
       }
     });
 };
@@ -58,17 +59,18 @@ Game.setupEngine = function () {
         Crafty.background("#FFF"); // this sets the background to a static image
 
         // make player entity
-       Game.createPlayerComponent(playerStart);
+        Game.createPlayerComponent(playerStart);
 
         // create boundaries
         Crafty.e("2D, Canvas, Boundaries");
-
         Crafty.e("2D, Canvas, Bitcoins");
-
         Crafty.e("2D, Canvas, Coffee");
+        Crafty.e("2D, Canvas, Documents");
 
         Game.createAlienComponent();
         Game.createFreedomCorpComponent().attr({x:200,y:300});
+
+        Crafty.e("2D, Canvas, Guardian, Color, Solid").color('#ff0');
 
         Crafty.e("2D, Canvas, Wall");
 
