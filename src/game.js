@@ -66,7 +66,7 @@ Game.setupEngine = function () {
                                 x: player.x - player._movement.x * 1.1 ,
                                 y: player.y - player._movement.y * 1.1
                             };
-                        this.coliding = true;
+                        this.colliding = true;
                         setTimeout(function () {
                             player.x = origin.x;
                             player.y = origin.y;
@@ -79,10 +79,6 @@ Game.setupEngine = function () {
 
         },
         handlebase: function() { // runs every frame
-            if (this.x < 0) this.x = 0; // stop left
-            if (this.x > 2390) this.x = 2390; // stop right
-            if (this.y < 0 ) this.y = 0;
-            if(this.y>1590) this.y= 1590;
             Crafty.viewport.scroll('_x', -(this.x + (this.w / 2) - (Crafty.viewport.width / 2) ));
             Crafty.viewport.scroll('_y', -(this.y + (this.h / 2) - (Crafty.viewport.height / 2) ));
         },
