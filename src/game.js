@@ -21,7 +21,7 @@ Game.loadSprites = function(){
 Game.setupEngine = function () {
 
     //start crafty with a 600x600 active display area or "stage"
-    Crafty.init(600, 600);
+    Crafty.init(2400, 1600);
 
     // Loading sprites (graphic images)
     Game.loadSprites();
@@ -33,6 +33,7 @@ Game.setupEngine = function () {
         PlayerPic: [0,0,57,71]
     });
 
+    Crafty.viewport.init(600, 400);
 
     // Player component - for handling moving player on screen
     Crafty.c("Snowden", {
