@@ -55,15 +55,15 @@ Game.setupPlayerComponent = function(){
                     if (!this.colliding) {
                         var player = this ,
                             origin = {
-                                x: player.x - player._movement.x * 1.1 ,
-                                y: player.y - player._movement.y * 1.1
+                                x: player.x - player._movement.x  ,
+                                y: player.y - player._movement.y
                             };
                         this.colliding = true;
-                        setTimeout(function () {
+
                             player.x = origin.x;
                             player.y = origin.y;
                             player.colliding = false;
-                        }, 10);
+
                     }
                 });
             });
