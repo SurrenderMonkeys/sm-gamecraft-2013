@@ -47,6 +47,19 @@ Game.setupEnvironmentComponents = function(){
         }
     });
 
+    Crafty.c("Streets", {
+        init: function() {
+            for (var x = 0; x < Game.width/Game.tile_width; x++) {
+                for (var y = 0; y < Game.height/Game.tile_height; y++) {
+                    var at_edge = x == 0 || x == (Game.width/Game.tile_width -1) || y == 0 || y == (Game.height/Game.tile_height - 1);
+                    if (Game.MapData[y][x] === 0) {
+                        Crafty.e('Boundary').at(x, y);
+                    }
+                }
+            }
+        }
+    });
+
     Crafty.c("Bitcoins", {
         init: function() {
             for (var i = 1; i < Game.height/Game.tile_height; i++) {
