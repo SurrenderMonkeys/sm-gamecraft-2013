@@ -33,11 +33,11 @@ Game.setupEnvironmentComponents = function(){
     });
 
     Crafty.c("Bitcoins", {
-            init: function() {
-                for (var i = 0; i < Game.height/Game.tile_height; i++) {
-                  for (var j = 0; j < Game.width/Game.tile_width; j++) {
+        init: function() {
+            for (var i = 0; i < Game.height/Game.tile_height; i++) {
+                for (var j = 0; j < Game.width/Game.tile_width; j++) {
                     if (i > 0 && i < Game.height/Game.tile_height && j > 0 && j < Game.width/Game.tile_width && Math.random() < 0.01) {
-                      Crafty.e("2D, DOM, Bitcoin")
+                        Crafty.e("2D, DOM, Coin")
                         .attr({x: j * 16, y: i * 16});
                     }
                 }
