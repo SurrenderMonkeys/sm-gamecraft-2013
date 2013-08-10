@@ -47,9 +47,7 @@ Game.setupEngine = function () {
     Game.components();
 
     Game.obstacles = ["Wall","Boundary"];
-    Game.evilComponents = ["Alien","Shot"];
-    Game.collectables = ["Bitcoin"];
-
+    Game.evilComponents = ["Alien","Shot","FreedomCorp"];
 
     Crafty.viewport.init(600, 400);
 
@@ -61,16 +59,17 @@ Game.setupEngine = function () {
         Crafty.background("#FFF"); // this sets the background to a static image
 
         // make player entity
-       Game.createPlayerComponent(playerStart);
+       Game.snowden = Game.createPlayerComponent(playerStart);
 
         // create boundaries
         Crafty.e("2D, Canvas, Boundaries");
 
         Crafty.e("2D, Canvas, Bitcoins");
 
+        Crafty.e("2D, Canvas, Coffee");
 
         Game.createAlienComponent();
-        Game.createFreedomCorpComponent().attr({x:200,y:300});
+        Game.createFreedomCorpComponent().attr({x:100,y:100});
 
         Crafty.e("2D, Canvas, Wall");
 

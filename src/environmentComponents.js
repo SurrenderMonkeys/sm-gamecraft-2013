@@ -11,6 +11,17 @@ Game.setupEnvironmentComponents = function(){
         }
     });
 
+    Crafty.c("Coffee", {
+        init: function(){
+          var positions = [{x:100,y:100},{x:400,y:500},{x:600,y:200}];
+
+          for (var i = positions.length - 1; i >= 0; i--) {
+            pos = positions[i];
+            Crafty.e("2D, DOM, CoffeeCup").attr({x: pos.x, y: pos.y, z: 1});
+          }
+        }
+    });
+
     Crafty.c("Boundaries", {
         init: function() {
             for (var x = 0; x < Game.width/Game.tile_width; x++) {
@@ -36,7 +47,6 @@ Game.setupEnvironmentComponents = function(){
             }
         }
     });
-
 
     // Bits component - for handling Bitss
     Crafty.c("Bits", {
