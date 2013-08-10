@@ -220,7 +220,7 @@ Game.setupEngine = function () {
     // The following code sets up our scene
 
     Crafty.scene("game", function () { // the scene is called "game"
-        var playerStart = { x: 300, y: 500, z:5 };
+        var playerStart = { x: 300, y: 200, z:5 };
         // set background
         Crafty.background("#FFF"); // this sets the background to a static image
 
