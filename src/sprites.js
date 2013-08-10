@@ -11,7 +11,7 @@ Game.loadSprites = function(){
     });
 
     Crafty.sprite(1, "./web/images/alien.png", {
-        AlienPic: [0,0,60,57]
+        AlienPic: [0,0,52,42]
     });
 
     Crafty.sprite(1, "./web/images/shot.png", {	// player shots
