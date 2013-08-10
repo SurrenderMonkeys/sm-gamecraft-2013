@@ -55,13 +55,13 @@ Game.setupEngine = function () {
     // The following code sets up our scene
 
     Crafty.scene("game", function () { // the scene is called "game"
-        var playerStart = { x: 300, y: 200, z:5 };
+        Game.playerStart = { x: 100, y: 50, z:5 };
         // set background
         Crafty.background("#FFF"); // this sets the background to a static image
 
         // make player entity
 
-       Game.snowden = Game.createPlayerComponent(playerStart);
+       Game.snowden = Game.createPlayerComponent(Game.playerStart);
 
         // create boundaries
         Crafty.e("2D, Canvas, Boundaries");
@@ -71,7 +71,7 @@ Game.setupEngine = function () {
         Crafty.e("2D, Canvas, Documents");
 
         Game.createAlienComponent();
-        Game.createFreedomCorpComponent().attr({x:100,y:100});
+        Game.createFreedomCorpComponent().attr({x:320,y:200});
 
         Crafty.e("2D, Canvas, Guardian, Color, Solid").color('#ff0');
 
@@ -83,4 +83,16 @@ Game.setupEngine = function () {
     Crafty.scene("game");
 
     // The result of all of this should be a simple space invaders game
+}
+
+Game.animateMoveElement = function(element,e){
+    if(e.keyCode === Crafty.keys.LEFT_ARROW || e.keyCode === Crafty.keys.A) {
+        element.stop().animate("walk_left", 12, -1);
+    } else if(e.keyCode === Crafty.keys.RIGHT_ARROW || e.keyCode === Crafty.keys.D) {
+        element.stop().animate("walk_right", 12, -1);
+    } else if(e.keyCode === Crafty.keys.UP_ARROW || e.keyCode === Crafty.keys.W) {
+        element.stop().animate("walk_up", 12, -1);
+    } else if(e.keyCode === Crafty.keys.DOWN_ARROW || e.keyCode === Crafty.keys.S) {
+        element.stop().animate("walk_down", 12, -1);
+    }
 }
