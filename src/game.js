@@ -46,7 +46,7 @@ Game.setupEngine = function () {
     Game.components();
 
     Game.obstacles = ["Wall","Boundary"];
-    Game.evilComponents = ["Alien","Shot"];
+    Game.evilComponents = ["Alien","Shot","FreedomCorp"];
     Game.collectables = ["Bitcoin"];
 
 
@@ -69,7 +69,7 @@ Game.setupEngine = function () {
 
 
         Game.createAlienComponent();
-        Game.createFreedomCorpComponent().attr({x:200,y:300});
+        Game.createFreedomCorpComponent().attr({x:100,y:100});
 
         Crafty.e("2D, Canvas, Wall");
 

@@ -72,16 +72,32 @@ Game.setupEnemyComponents = function () {
             var that = this;
             this.bind("EnterFrame", this.moveRandomly);
             this.addComponent("FreedomCorpPic");
-
+            this.addComponent("Collision");
 
             that.animate('walk_up', 0, 0, 2)    ;
-           // that  .animate('walk_up', [[1,0], [2,0], [3,0]])   ;
-            that   .animate('walk_right', 0, 1, 2)      ;
-          //  that   .animate('walk_right', [[4,0], [5,0], [6,0]])  ;
-            that   .animate('walk_down', 0, 2, 2)             ;
-           // that    .animate('walk_down', [[7,0], [8,0], [9,0]])   ;
-            that   .animate('walk_left', 0, 3, 2)   ;
-           // that  .animate('walk_left', [[10,0], [11,0], [12,0]]) ;
+            that.animate('walk_right', 0, 1, 2)      ;
+            that.animate('walk_down', 0, 2, 2)             ;
+            that.animate('walk_left', 0, 3, 2)   ;
+
+            //setup obstacle collisions
+            _.each(Game.obstacles, function(componentName){
+                that.onHit(componentName, function(collidingComponent){
+                    if (!that.colliding) {
+                        var unit = that ,
+                            origin = {
+                                x: unit.x - unit.dx * 1.1 ,
+                                y: unit.y - unit.dy * 1.1
+                            };
+                        this.colliding = true;
+                        setTimeout(function () {
+                            unit.x = origin.x;
+                            unit.y = origin.y;
+                            unit.colliding = false;
+                        }, 10);
+                    }
+                });
+            });
+
 
             setInterval(function () {
                 that.dx = Crafty.math.randomInt(-1, 1) * that.speed;
