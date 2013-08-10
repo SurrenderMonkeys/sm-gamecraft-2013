@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="./src/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="./src/crafty-release.js"></script>
+<script type="text/javascript" src="./src/underscore-min.js"></script>
+
+<script type="text/javascript" src="./src/component/objects.js"></script>
+<script type="text/javascript" src="./src/game.js"></script>
+
+<link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+
+
+<style type="text/css">
+  html,
+  body {
+    background: #292929;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    height: 100%;
+  }
+
+  .player-two {
+    font-family: 'Press Start 2P', 'Courier New' courier;
+  }
+
+  .title {
+    font-size: 30px;
+    letter-spacing: 2px;
+    text-align: center;
+    text-shadow: 1px 1px 0 black, 2px 2px 0 black, 3px 3px 0 black, 4px 4px 0 black, 5px 5px 0 black;
+  }
+
+  .instructions {
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-align: center;
+    text-shadow: 1px 1px 0 black, 2px 2px 0 black, 3px 3px 0 black;
+  }
+</style>
+
+
+<script type="text/javascript">
+    //initialize
+    $(document).ready(function () {
+        Game.setupEngine(Crafty);
+    });
+</script>
+
+
+<title>Escape</title>
+</head>
+
+<body>
+  <div style="padding: 50px; min-width: 610px;">
+    <h1 class="title player-two">Escape</h1>
+    <div style="background: black; border-radius: 5px; width: 600px; padding: 5px; margin: 0 auto;">
+      <div id="cr-stage" style="width: 600px; height: 400px; overflow: hidden; position: relative; background: black">
+        <div style="position: absolute; z-index: 1; transform: scale(1, 1);"></div>
+      </div>
+    </div>
+
+    <p class="instructions player-two">Controls: Arrows or WASD</p>
+  </div>
+
+
+
+
+
+</body>
+</html>

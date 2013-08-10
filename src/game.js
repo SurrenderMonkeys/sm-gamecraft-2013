@@ -1,4 +1,4 @@
-Game = {};
+var Game = window.Game || {};
 
 Game.loadSprites = function(){
     Crafty.sprite(1, "./web/images/wall.png", {
@@ -21,10 +21,12 @@ Game.loadSprites = function(){
 Game.setupEngine = function () {
 
     //start crafty with a 600x600 active display area or "stage"
-    Crafty.init(600, 600);
+    Crafty.init(600, 400);
 
     // Loading sprites (graphic images)
     Game.loadSprites();
+
+    new Game.Collidable("Wall", ["WallPic"], {x: 200, y: 200});
 
     Game.obstacles = ["Wall"];
     Game.evilComponents = ["Alien","Shot"];
@@ -32,7 +34,6 @@ Game.setupEngine = function () {
     Crafty.sprite(1, "./web/images/player.png", { // player base
         PlayerPic: [0,0,57,71]
     });
-
 
     // Player component - for handling moving player on screen
     Crafty.c("Snowden", {
@@ -80,20 +81,12 @@ Game.setupEngine = function () {
             if (this.x < 0) this.x = 0; // stop left
             if (this.x > 520) this.x = 520; // stop right
             if (this.y < 0 ) this.y = 0;
-            if(this.y>520) this.y= 520;
+            if (this.y > 320) this.y = 320;
         },
         handlekey: function(keyevent) { // handles key events
             if(keyevent.keyCode === Crafty.keys.SPACE) { // they hit space
                 Crafty.e("2D, Canvas, Shot").attr({x:this.x+34, y:500, z:1}); // create a shot at our current position
             }
-        }
-    });
-
-    Crafty.c("Wall",{
-        x:200,
-        y:200,
-        init: function(){
-            this.addComponent("WallPic");
         }
     });
 
@@ -190,7 +183,7 @@ Game.setupEngine = function () {
         Crafty.background("#FFF"); // this sets the background to a static image
 
         // make player entity
-        Crafty.e("2D, Canvas, Snowden").attr({ x: 300, y: 500, z:5 });
+        Crafty.e("2D, Canvas, Snowden").attr({ x: 300, y: 200, z:5 });
 
         // make alien entity (coordinates are set in component's init function)
         Crafty.e("2D, Canvas, Alien");
@@ -203,4 +196,4 @@ Game.setupEngine = function () {
     Crafty.scene("game");
 
     // The result of all of this should be a simple space invaders game
-}
+};

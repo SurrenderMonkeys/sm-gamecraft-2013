@@ -3,7 +3,7 @@ var Game = window.Game || {},
 
 Game.Collidable = Collidable = (function() {
 
-  function Collidable(name, spriteComponent, position) {
+  function Collidable(name, componentList, position) {
     if (position == null) {
       position = {
         x: 0,
@@ -11,11 +11,18 @@ Game.Collidable = Collidable = (function() {
       };
     }
 
+    if (componentList == null) {
+      componentList = [];
+    }
+
     Crafty.c(name, {
       x: position.x,
       y: position.y,
       init: function() {
-        return this.addComponent(spriteComponent);
+        for (var i = componentList.length - 1; i >= 0; i--) {
+          component = componentList[i];
+          this.addComponent(component);
+        }
       }
     });
   }
