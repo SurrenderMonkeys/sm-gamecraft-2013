@@ -51,13 +51,11 @@ Game.setupPlayerComponent = function(){
                 });
             });
 
-            _.each(Game.lives, function(componentName){
-                that.onHit(componentName, function(collidingComponent){
-                  if(that.heartBar.length<3){
-                    that.heartBar.push(Crafty.e("2D, Canvas, Heart"));
-                    collidingComponent[0].obj.destroy();
-                  }
-                });
+            that.onHit("CoffeeCup", function(collidingComponent){
+              if(that.heartBar.length<3){
+                that.heartBar.push(Crafty.e("2D, Canvas, Heart"));
+                collidingComponent[0].obj.destroy();
+              }
             });
 
             this.onHit("Coin", function(data){

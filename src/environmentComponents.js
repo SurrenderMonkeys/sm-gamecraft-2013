@@ -12,10 +12,13 @@ Game.setupEnvironmentComponents = function(){
     });
 
     Crafty.c("Coffee", {
-        x: 100,
-        y: 100,
         init: function(){
-            this.addComponent("CoffeeCup");
+          var positions = [{x:100,y:100},{x:400,y:500},{x:600,y:200}];
+
+          for (var i = positions.length - 1; i >= 0; i--) {
+            pos = positions[i];
+            Crafty.e("2D, DOM, CoffeeCup").attr({x: pos.x, y: pos.y, z: 1});
+          }
         }
     });
 
