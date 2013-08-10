@@ -26,8 +26,9 @@ Game.setupEngine = function () {
     // Loading sprites (graphic images)
     Game.loadSprites();
 
-
-
+    Game.obstacles = ["Wall"];
+    Game.evilComponents = ["Alien","Shot"];
+    Game.goodComponents = ["Bits"];
 
     Crafty.sprite(1, "./web/images/player.png", { // player base
         PlayerPic: [0,0,57,71]
@@ -38,7 +39,8 @@ Game.setupEngine = function () {
     Crafty.c("Snowden", {
         dx: 0, // setting initial vertical speed - note variables are set differently here
 
-        init: function() {  // init function is automatically run when entity with this component is created
+        init: function() {
+            var that = this;
             this.bind("EnterFrame",this.handlebase); // bind the EnterFrame event to the "handlebase" function below
             this.bind("KeyDown",this.handlekey); // bind the EnterFrame event to the "handlebase" function below
 
@@ -47,26 +49,33 @@ Game.setupEngine = function () {
             this.addComponent("Fourway");
             this.fourway(4,0);
 
-            this.onHit("Alien", function(){
-                this.x = 0;
-                this.y = 0;
+            //setup die collisions
+            _.each(Game.evilComponents, function(componentName){
+                that.onHit(componentName, function(){
+                    that.x = 0;
+                    that.y = 0;
+                });
             });
 
-            this.onHit("Wall", function(component){
-                if (!this.colliding) {
-                    var that = this ,
-                        origin = {
-                            x: that.x - that._movement.x ,
-                            y: that.y - that._movement.y
-                        };
-                    this.coliding = true;
-                    setTimeout(function () {
-                        that.x = origin.x;
-                        that.y = origin.y;
-                        that.colliding = false;
-                    }, 10);
-                }
+            //setup obstacle collisions
+            _.each(Game.obstacles, function(componentName){
+                that.onHit(componentName, function(collidingComponent){
+                    if (!this.colliding) {
+                        var player = this ,
+                            origin = {
+                                x: player.x - player._movement.x * 1.1 ,
+                                y: player.y - player._movement.y * 1.1
+                            };
+                        this.coliding = true;
+                        setTimeout(function () {
+                            player.x = origin.x;
+                            player.y = origin.y;
+                            player.colliding = false;
+                        }, 10);
+                    }
+                });
             });
+
         },
         handlebase: function() { // runs every frame
             if (this.x < 0) this.x = 0; // stop left
