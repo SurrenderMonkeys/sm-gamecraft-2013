@@ -42,6 +42,7 @@ Game.setupEngine = function () {
     Game.setupEnvironmentComponents();
     Game.setupPlayerComponent();
     Game.setupEnemyComponents();
+    Game.setupScore();
 
     Game.components();
 
@@ -72,7 +73,6 @@ Game.setupEngine = function () {
         Game.createFreedomCorpComponent().attr({x:200,y:300});
 
         Crafty.e("2D, Canvas, Wall");
-
 
     }); // end of Crafty.scene function definition for "game" scene
 

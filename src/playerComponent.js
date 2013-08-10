@@ -8,6 +8,7 @@ Game.setupPlayerComponent = function(){
 
         init: function() {
             var that = this;
+            var score = Crafty.e("Score");
             this.bind("EnterFrame",this.handlebase); // bind the EnterFrame event to the "handlebase" function below
             this.bind("KeyDown",this.handlekey); // bind the EnterFrame event to the "handlebase" function below
 
@@ -54,6 +55,7 @@ Game.setupPlayerComponent = function(){
             this.onHit("Coin", function(data){
                 bitcoin = data[0].obj;
                 bitcoin.destroy();
+                score.update(20);
             });
 
             this.heartBar = [Crafty.e("2D, Canvas, Heart"),
@@ -79,13 +81,6 @@ Game.setupPlayerComponent = function(){
                 Crafty.e("2D, Canvas, Shot").attr({x:this.x+34, y:500, z:1}); // create a shot at our current position
             }
         },
-
-        collectBitcoin: function(data) {
-            console.log(data);
-            component = data[0].obj;
-            console.log(component);
-            component.collect();
-        }
     });
 
 };
