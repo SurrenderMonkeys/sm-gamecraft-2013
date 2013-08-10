@@ -73,7 +73,7 @@ Game.setupEngine = function () {
         //Game.createAlienComponent();
         Game.createFreedomCorpComponent().attr({x:320,y:200});
 
-        Crafty.e("2D, Canvas, Guardian, Color, Solid").color('#ff0');
+        Crafty.e("2D, Canvas, Guardian");
 
         Crafty.e("2D, Canvas, Wall");
 

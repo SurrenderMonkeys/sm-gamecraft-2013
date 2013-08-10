@@ -130,9 +130,9 @@ Game.setupEnemyComponents = function () {
     });
 };
 
-Game.createAlienComponent = function () {
-    return Crafty.e("2D, Canvas, Alien");
-};
+// Game.createAlienComponent = function () {
+//     return Crafty.e("2D, Canvas, Alien");
+// };
 
 Game.createFreedomCorpComponent = function () {
     return Crafty.e("2D, Canvas, SpriteAnimation, FreedomCorp");

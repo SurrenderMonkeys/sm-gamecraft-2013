@@ -9,6 +9,8 @@ Game.setupPlayerComponent = function(){
       init: function() {
         this.bind("guardian:open", this.handleComplete);
         this.open = false;
+
+        this.addComponent("Guardian");
       },
       handleComplete: function() {
         this.open = true;
