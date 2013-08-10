@@ -65,6 +65,7 @@ Game.setupEngine = function () {
 
         // create boundaries
         Crafty.e("2D, Canvas, Boundaries");
+        Crafty.e("2D, Canvas, Streets");
         Crafty.e("2D, Canvas, Bitcoins");
         Crafty.e("2D, Canvas, Coffee");
         Crafty.e("2D, Canvas, Documents");
