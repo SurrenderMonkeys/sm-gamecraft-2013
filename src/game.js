@@ -79,8 +79,12 @@ Game.setupEngine = function () {
 
         },
         handlebase: function() { // runs every frame
-            Crafty.viewport.x = - this.x + 300;
-            Crafty.viewport.y = - this.y + 200;
+            if (this.x < 0) this.x = 0; // stop left
+            if (this.x > 2390) this.x = 2390; // stop right
+            if (this.y < 0 ) this.y = 0;
+            if(this.y>1590) this.y= 1590;
+            Crafty.viewport.scroll('_x', -(this.x + (this.w / 2) - (Crafty.viewport.width / 2) ));
+            Crafty.viewport.scroll('_y', -(this.y + (this.h / 2) - (Crafty.viewport.height / 2) ));
         },
         handlekey: function(keyevent) { // handles key events
             if(keyevent.keyCode === Crafty.keys.SPACE) { // they hit space
