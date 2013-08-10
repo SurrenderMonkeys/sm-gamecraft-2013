@@ -56,10 +56,10 @@ Game.setupEngine = function () {
                 if (!this.colliding) {
                     var that = this ,
                         origin = {
-                            x: that.x - that._movement.x,
+                            x: that.x - that._movement.x ,
                             y: that.y - that._movement.y
                         };
-
+                    this.coliding = true;
                     setTimeout(function () {
                         that.x = origin.x;
                         that.y = origin.y;
