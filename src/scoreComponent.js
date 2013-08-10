@@ -4,7 +4,7 @@ Game.setupScore = function() {
   Crafty.c("Score", {
     init: function() {
       this.requires('DOM, 2D, Text');
-      this.attr({ x: 10, y: 10, z:100});
+      this.attr({ x: 0, y: -20, z:100});
       this.textColor("#ff0000");
       this.text("Score: " + 0);
       this.css({
