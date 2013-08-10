@@ -47,6 +47,6 @@ Game.loadSprites = function(){
     });
 
     Crafty.sprite(1,"./web/images/guardian.png", {
-        Guardian : [0,0,100,100]
+        GuardianPic : [0,0,100,100]
     });
 };

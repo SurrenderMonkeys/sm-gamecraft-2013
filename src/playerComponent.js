@@ -10,7 +10,7 @@ Game.setupPlayerComponent = function(){
         this.bind("guardian:open", this.handleComplete);
         this.open = false;
 
-        this.addComponent("Guardian");
+        this.addComponent("GuardianPic");
       },
       handleComplete: function() {
         this.open = true;
