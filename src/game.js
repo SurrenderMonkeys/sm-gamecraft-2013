@@ -21,7 +21,9 @@
 
 
  */
-setupEngine = function () {	// this is pure JavaScript that says that when our web page loads, we should run this code.
+Game = {};
+
+Game.setupEngine = function () {	// this is pure JavaScript that says that when our web page loads, we should run this code.
 
     //start crafty with a 600x600 active display area or "stage"
     Crafty.init(600, 600);
