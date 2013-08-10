@@ -39,6 +39,11 @@ Game.setupPlayerComponent = function(){
                         Crafty.trigger("game:over");
                         Crafty.e("2D, Canvas, Skull").attr({x:that.x+8,y:that.y+5,z:that.z-3});
                         that.destroy();
+                        if (window.confirm("All your lives are belong to us, Do you want to play again?")) {
+                          window.location(window.location());
+                        } else {
+                          window.location("http://www.youtube.com/embed/qItugh-fFgg")
+                        }
                     }
                     that.x = 100;
                     that.y = 50;
@@ -67,7 +72,9 @@ Game.setupPlayerComponent = function(){
             that.onHit("Guardian", function(obj) {
               office = obj[0].obj;
               if(office.open){
-                Crafty.trigger('game:won');
+                if (window.confirm("Congratulations you have told the story to the world, Do you want to play again?")) {
+                  window.location(window.location());
+                }
               }
             });
 
