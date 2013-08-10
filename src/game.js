@@ -28,11 +28,11 @@ Game.loadSprites = function(){
     });
 
     Crafty.sprite(1,"./web/images/Heart.png",{
-        HeartPic : [0,0,16,14]
+        HeartPic : [0,0,8,7]
     });
 
     Crafty.sprite(1,"./web/images/Skull.png",{
-        SkullPic : [0,0,33,47]
+        SkullPic : [0,0,57,17]
     });
 };
 
@@ -60,7 +60,7 @@ Game.components = function(){
       init: function() {
         this.requires('2D, Canvas, Grid, Color, Solid')
           .color('#000');
-      },
+      }
     });
 };
 
@@ -103,7 +103,7 @@ Game.setupEngine = function () {
                     that.heartBar.pop().destroy();
 
                     if(that.heartBar.length<=0){
-                        Crafty.e("2D, Canvas, Skull").attr({x:that.x+21,y:that.y+13,z:that.z});
+                        Crafty.e("2D, Canvas, Skull").attr({x:that.x+8,y:that.y+5,z:that.z});
                         that.destroy();
                     }
 
@@ -145,7 +145,7 @@ Game.setupEngine = function () {
             Crafty.viewport.scroll('_y', -(this.y + (this.h / 2) - (Crafty.viewport.height / 2) ));
 
             _.each(this.heartBar,function(element,index){
-                element.x = that.x + index * 14 + that.heartBarOffset.x + that._movement.x;
+                element.x = that.x + index * 8 + that.heartBarOffset.x + that._movement.x;
                 element.y = that.y + that.heartBarOffset.y + that._movement.y;
                 element.z = that.z + 1;
             });
