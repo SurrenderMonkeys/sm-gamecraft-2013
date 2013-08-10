@@ -6,6 +6,10 @@ Game.loadSprites = function(){
         PlayerPic: [0,0]
     },2);
 
+    Crafty.sprite(20,25,"./web/images/freedomCorp.png",{
+        FreedomCorpPic : [0,0]
+    });
+
     Crafty.sprite(1, "./web/images/wall.png", {
         WallPic : [0,0,70,70]
     });
@@ -32,10 +36,6 @@ Game.loadSprites = function(){
 
     Crafty.sprite(1,"./web/images/Skull.png",{
         SkullPic : [0,0,57,17]
-    });
-
-    Crafty.sprite(20,25,"./web/images/freedomCorp.png",{
-        freedomCorp : [0,0]
     });
 
     Crafty.sprite(1,"./web/collectable/bitcoin.png", {

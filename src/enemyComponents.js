@@ -1,17 +1,17 @@
 Game = Game || {};
 
-Game.setupEnemyComponents = function (){
+Game.setupEnemyComponents = function () {
 
 
     // Shot component - for handling shots
     Crafty.c("Shot", {
         dy: 0, // setting initial vertical speed - note variables are set differently here
 
-        init: function() {  // init function is automatically run when entity with this component is created
-            this.bind("EnterFrame",this.handleshot); // bind the EnterFrame event to the "handleshot" function below
+        init: function () {  // init function is automatically run when entity with this component is created
+            this.bind("EnterFrame", this.handleshot); // bind the EnterFrame event to the "handleshot" function below
             this.addComponent("ShotPic"); // add the picture to this entity
         },
-        handleshot: function() { // happens every frame
+        handleshot: function () { // happens every frame
             this.y -= 5; // move up
             if (this.y < -10) this.destroy(); // kill the shot if it goes offscreen
         }
@@ -21,21 +21,21 @@ Game.setupEnemyComponents = function (){
     Crafty.c("Alien", {
         y: -100, // setting initial vertical speed - note variables are set differently here
         x: 50,
-        z:3,
+        z: 3,
         dx: 6,
 
-        init: function() {  // init function is automatically run when entity with this component is created
-            this.bind("EnterFrame",this.handlealien); // bind the EnterFrame event to the "handlealien" function below
+        init: function () {  // init function is automatically run when entity with this component is created
+            this.bind("EnterFrame", this.handlealien); // bind the EnterFrame event to the "handlealien" function below
             this.addComponent("AlienPic"); // add the picture to this entity
 
             this.addComponent("Collision"); // add the collision component
-            this.onHit("Shot",this.gotshot); // set up a function to call if we get hit by a shot
+            this.onHit("Shot", this.gotshot); // set up a function to call if we get hit by a shot
         },
-        handlealien: function() { // happens every frame
+        handlealien: function () { // happens every frame
 
-            this.y += (100-this.y)*0.05;  // descend toward y=100
+            this.y += (100 - this.y) * 0.05;  // descend toward y=100
 
-            this.y += Crafty.math.randomInt(-1,1); // add a small random component to y position - ship could move -1, 0, or 1
+            this.y += Crafty.math.randomInt(-1, 1); // add a small random component to y position - ship could move -1, 0, or 1
 
             this.x += this.dx; // move according to speed
 
@@ -48,11 +48,11 @@ Game.setupEnemyComponents = function (){
                 this.dx = -6; // move leftward now
             }
         },
-        gotshot: function() { //happens when we get hit by a shot
+        gotshot: function () { //happens when we get hit by a shot
 
             // create explosion pieces
-            for (i=0;i<20;i++) { // create a bunch of chunks
-                Crafty.e("2D, Canvas, Bits").attr({x:this.x + 22, y:this.y + 21, z:6});
+            for (i = 0; i < 20; i++) { // create a bunch of chunks
+                Crafty.e("2D, Canvas, Bits").attr({x: this.x + 22, y: this.y + 21, z: 6});
             }
 
             // get rid of us - but with trickery
@@ -62,4 +62,59 @@ Game.setupEnemyComponents = function (){
 
     }); // end of alien component
 
-}
+
+    Crafty.c("FreedomCorp", {
+        z: 3,
+        speed: 2,
+        dx: 2,
+        dy: 2,
+        init: function () {
+            var that = this;
+            this.bind("EnterFrame", this.moveRandomly);
+            this.addComponent("FreedomCorpPic");
+
+
+            that.animate('walk_up', 0, 0, 2)    ;
+           // that  .animate('walk_up', [[1,0], [2,0], [3,0]])   ;
+            that   .animate('walk_right', 0, 1, 2)      ;
+          //  that   .animate('walk_right', [[4,0], [5,0], [6,0]])  ;
+            that   .animate('walk_down', 0, 2, 2)             ;
+           // that    .animate('walk_down', [[7,0], [8,0], [9,0]])   ;
+            that   .animate('walk_left', 0, 3, 2)   ;
+           // that  .animate('walk_left', [[10,0], [11,0], [12,0]]) ;
+
+            setInterval(function () {
+                that.dx = Crafty.math.randomInt(-1, 1) * that.speed;
+                that.dy = Crafty.math.randomInt(-1, 1) * that.speed;
+
+            }, 1000);
+        },
+        moveRandomly: function () {
+            var that = this;
+            this.x += this.dx;
+            this.y += this.dy;
+
+            if(that.dx < 0) {
+                if(!that.isPlaying("walk_left"))
+                    that.stop().animate("walk_left", 12, -1);
+            } else if(that.dx > 0) {
+                if(!that.isPlaying("walk_right"))
+                    that.stop().animate("walk_right", 12, -1);
+            } else if(that.dy < 0) {
+                if(!that.isPlaying("walk_up"))
+                    that.stop().animate("walk_up", 12, -1);
+            } else if(that.dy > 0) {
+                if(!that.isPlaying("walk_down"))
+                    that.stop().animate("walk_down", 12, -1);
+            }
+        }
+    });
+};
+
+Game.createAlienComponent = function () {
+    return Crafty.e("2D, Canvas, Alien");
+};
+
+Game.createFreedomCorpComponent = function () {
+    return Crafty.e("2D, Canvas, SpriteAnimation, FreedomCorp");
+};
