@@ -76,6 +76,7 @@ Game.setupEngine = function () {
                 });
             });
 
+
         },
         handlebase: function() { // runs every frame
             if (this.x < 0) this.x = 0; // stop left
