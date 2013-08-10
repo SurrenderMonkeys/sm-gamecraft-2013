@@ -100,15 +100,16 @@ Game.setupEngine = function () {
             //setup die collisions
             _.each(Game.evilComponents, function(componentName){
                 that.onHit(componentName, function(collidingComponent){
-                    that.x = 21;
-                    that.y = 26;
-
                     that.heartBar.pop().destroy();
 
                     if(that.heartBar.length<=0){
-                        Crafty.e("2D, Canvas, Skull").attr({x:that.x+21,y:that.y+21,z:that.z});
+                        Crafty.e("2D, Canvas, Skull").attr({x:that.x+21,y:that.y+13,z:that.z});
                         that.destroy();
                     }
+
+                    that.x = 21;
+                    that.y = 26;
+
                 });
             });
 
