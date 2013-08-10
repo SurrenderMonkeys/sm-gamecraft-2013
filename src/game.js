@@ -21,12 +21,10 @@ Game.loadSprites = function(){
 Game.setupEngine = function () {
 
     //start crafty with a 600x600 active display area or "stage"
-    Crafty.init(600, 400);
+    Crafty.init(2400, 1600);
 
     // Loading sprites (graphic images)
     Game.loadSprites();
-
-    new Game.Collidable("Wall", ["WallPic"], {x: 200, y: 200});
 
     Game.obstacles = ["Wall"];
     Game.evilComponents = ["Alien","Shot"];
@@ -34,6 +32,8 @@ Game.setupEngine = function () {
     Crafty.sprite(1, "./web/images/player.png", { // player base
         PlayerPic: [0,0,57,71]
     });
+
+    Crafty.viewport.init(600, 400);
 
     // Player component - for handling moving player on screen
     Crafty.c("Snowden", {
@@ -76,12 +76,15 @@ Game.setupEngine = function () {
                 });
             });
 
+
         },
         handlebase: function() { // runs every frame
             if (this.x < 0) this.x = 0; // stop left
-            if (this.x > 520) this.x = 520; // stop right
+            if (this.x > 2390) this.x = 2390; // stop right
             if (this.y < 0 ) this.y = 0;
-            if (this.y > 320) this.y = 320;
+            if(this.y>1590) this.y= 1590;
+            Crafty.viewport.scroll('_x', -(this.x + (this.w / 2) - (Crafty.viewport.width / 2) ));
+            Crafty.viewport.scroll('_y', -(this.y + (this.h / 2) - (Crafty.viewport.height / 2) ));
         },
         handlekey: function(keyevent) { // handles key events
             if(keyevent.keyCode === Crafty.keys.SPACE) { // they hit space
@@ -89,6 +92,9 @@ Game.setupEngine = function () {
             }
         }
     });
+
+    // collidable objects
+    new Game.Collidable("Wall", ["WallPic"], {x: 200, y: 200});
 
     // Shot component - for handling shots
     Crafty.c("Shot", {
@@ -183,7 +189,7 @@ Game.setupEngine = function () {
         Crafty.background("#FFF"); // this sets the background to a static image
 
         // make player entity
-        Crafty.e("2D, Canvas, Snowden").attr({ x: 300, y: 200, z:5 });
+        Crafty.e("2D, Canvas, Snowden").attr({ x: 300, y: 500, z:5 });
 
         // make alien entity (coordinates are set in component's init function)
         Crafty.e("2D, Canvas, Alien");
@@ -196,4 +202,4 @@ Game.setupEngine = function () {
     Crafty.scene("game");
 
     // The result of all of this should be a simple space invaders game
-};
+}
