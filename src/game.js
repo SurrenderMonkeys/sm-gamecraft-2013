@@ -1,4 +1,9 @@
-var Game = window.Game || {};
+Game = window.Game || {};
+
+Game.width = 2400;
+Game.height = 1600;
+Game.tile_width = 20;
+Game.tile_height = 25;
 
 Game.loadSprites = function(){
     Crafty.sprite(1, "./web/images/wall.png", {
@@ -18,15 +23,44 @@ Game.loadSprites = function(){
     });
 };
 
-Game.setupEngine = function () {
+Game.components = function(){
+    Crafty.c('Grid', {
+      init: function() {
+        this.attr({
+          w: Game.tile_width,
+          h: Game.tile_height
+        })
+      },
 
+      // Locate this entity at the given position on the grid
+      at: function(x, y) {
+        if (x === undefined && y === undefined) {
+          return { x: this.x/Game.tile_width, y: this.y/Game.tile_height }
+        } else {
+          this.attr({ x: x * Game.tile_width, y: y * Game.tile_height });
+          return this;
+        }
+      }
+    });
+
+    Crafty.c('Boundary', {
+      init: function() {
+        this.requires('2D, Canvas, Grid, Color, Solid')
+          .color('#000');
+      },
+    });
+};
+
+Game.setupEngine = function () {
     //start crafty with a 600x600 active display area or "stage"
-    Crafty.init(2400, 1600);
+    Crafty.init(Game.width, Game.height);
 
     // Loading sprites (graphic images)
     Game.loadSprites();
 
-    Game.obstacles = ["Wall"];
+    Game.components();
+
+    Game.obstacles = ["Wall","Boundary"];
     Game.evilComponents = ["Alien","Shot"];
 
     Crafty.sprite(1, "./web/images/player.png", { // player base
@@ -52,8 +86,8 @@ Game.setupEngine = function () {
             //setup die collisions
             _.each(Game.evilComponents, function(componentName){
                 that.onHit(componentName, function(){
-                    that.x = 0;
-                    that.y = 0;
+                    that.x = 21;
+                    that.y = 26;
                 });
             });
 
@@ -75,8 +109,6 @@ Game.setupEngine = function () {
                     }
                 });
             });
-
-
         },
         handlebase: function() { // runs every frame
             Crafty.viewport.scroll('_x', -(this.x + (this.w / 2) - (Crafty.viewport.width / 2) ));
@@ -89,8 +121,26 @@ Game.setupEngine = function () {
         }
     });
 
-    // collidable objects
-    new Game.Collidable("Wall", ["WallPic"], {x: 200, y: 200});
+    Crafty.c("Wall",{
+        x:200,
+        y:200,
+        init: function(){
+            this.addComponent("WallPic");
+        }
+    });
+
+    Crafty.c("Boundaries", {
+        init: function() {
+            for (var x = 0; x < Game.width; x++) {
+                for (var y = 0; y < Game.height; y++) {
+                    var at_edge = x == 0 || x == Game.width - 1 || y == 0 || y == Game.height - 1;
+                    if (at_edge) {
+                        Crafty.e('Boundary').at(x, y);
+                    }
+                }
+            }
+        }
+    });
 
     // Shot component - for handling shots
     Crafty.c("Shot", {
@@ -186,6 +236,9 @@ Game.setupEngine = function () {
 
         // make player entity
         Crafty.e("2D, Canvas, Snowden").attr({ x: 300, y: 500, z:5 });
+
+        // create boundaries
+        Crafty.e("2D, Canvas, Boundaries");
 
         // make alien entity (coordinates are set in component's init function)
         Crafty.e("2D, Canvas, Alien");
