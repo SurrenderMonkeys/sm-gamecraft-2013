@@ -1,4 +1,4 @@
-Game = Game || {};
+Game = window.Game || {};
 
 Game.loadSprites = function(){
 

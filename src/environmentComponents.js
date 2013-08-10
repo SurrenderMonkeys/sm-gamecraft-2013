@@ -1,4 +1,4 @@
-Game = Game || {};
+Game = window.Game || {};
 
 Game.setupEnvironmentComponents = function(){
     Crafty.c("Heart", {init: function(){this.addComponent("HeartPic");}});
