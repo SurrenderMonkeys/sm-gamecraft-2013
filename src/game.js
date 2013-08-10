@@ -1,17 +1,11 @@
 Game = {};
 
-Game.setupEngine = function () {
-
-    //start crafty with a 600x600 active display area or "stage"
-    Crafty.init(600, 600);
-
-    // Loading sprites (graphic images)
-
-    Crafty.sprite(1, "./web/images/player.png", { // player base
-        PlayerPic: [0,0,57,71]
+Game.loadSprites = function(){
+    Crafty.sprite(1, "./web/images/wall.png", {
+        WallPic : [0,0,70,70]
     });
 
-    Crafty.sprite(1, "./web/images/alien.png", {	// enemy
+    Crafty.sprite(1, "./web/images/alien.png", {
         AlienPic: [0,0,60,57]
     });
 
@@ -19,9 +13,26 @@ Game.setupEngine = function () {
         ShotPic: [0,0,12,17]
     });
 
-    Crafty.sprite(1, "./web/images/bit.png", {	// player shots
+    Crafty.sprite(1, "./web/images/bit.png", {
         BitsPic: [0,0,15,16]
     });
+};
+
+Game.setupEngine = function () {
+
+    //start crafty with a 600x600 active display area or "stage"
+    Crafty.init(600, 600);
+
+    // Loading sprites (graphic images)
+    Game.loadSprites();
+
+
+
+
+    Crafty.sprite(1, "./web/images/player.png", { // player base
+        PlayerPic: [0,0,57,71]
+    });
+
 
     // Player component - for handling moving player on screen
     Crafty.c("Snowden", {
@@ -36,9 +47,25 @@ Game.setupEngine = function () {
             this.addComponent("Fourway");
             this.fourway(4,0);
 
-            this.onHit("Alien",function(){
-                this.x = 0 ;
-                this.y = 0 ;
+            this.onHit("Alien", function(){
+                this.x = 0;
+                this.y = 0;
+            });
+
+            this.onHit("Wall", function(component){
+                if (!this.colliding) {
+                    var that = this ,
+                        origin = {
+                            x: that.x - that._movement.x,
+                            y: that.y - that._movement.y
+                        };
+
+                    setTimeout(function () {
+                        that.x = origin.x;
+                        that.y = origin.y;
+                        that.colliding = false;
+                    }, 10);
+                }
             });
         },
         handlebase: function() { // runs every frame
@@ -52,7 +79,15 @@ Game.setupEngine = function () {
                 Crafty.e("2D, Canvas, Shot").attr({x:this.x+34, y:500, z:1}); // create a shot at our current position
             }
         }
-    }); // end of Player component
+    });
+
+    Crafty.c("Wall",{
+        x:200,
+        y:200,
+        init: function(){
+            this.addComponent("WallPic");
+        }
+    });
 
     // Shot component - for handling shots
     Crafty.c("Shot", {
@@ -151,6 +186,8 @@ Game.setupEngine = function () {
 
         // make alien entity (coordinates are set in component's init function)
         Crafty.e("2D, Canvas, Alien");
+
+        Crafty.e("2D, Canvas, Wall");
 
     }); // end of Crafty.scene function definition for "game" scene
 
