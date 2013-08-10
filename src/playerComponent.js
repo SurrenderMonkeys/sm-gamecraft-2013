@@ -42,7 +42,7 @@ Game.setupPlayerComponent = function(){
                         if (window.confirm("All your lives are belong to us, Do you want to play again?")) {
                           window.location(window.location());
                         } else {
-                          window.location("http://www.youtube.com/embed/qItugh-fFgg")
+                          window.location("http://www.youtube.com/embed/qItugh-fFgg");
                         }
                     }
                     that.x = 100;
