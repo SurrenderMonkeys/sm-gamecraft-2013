@@ -47,6 +47,7 @@ Game.setupEngine = function () {
 
     Game.obstacles = ["Wall","Boundary"];
     Game.evilComponents = ["Alien","Shot"];
+    Game.collectables = ["Bitcoin"];
 
 
     Crafty.viewport.init(600, 400);

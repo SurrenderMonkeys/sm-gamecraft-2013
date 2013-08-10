@@ -35,6 +35,6 @@ Game.loadSprites = function(){
     });
 
     Crafty.sprite(1,"./web/collectable/bitcoin.png", {
-        Bitcoin : [0,0,13,13]
+        Coin : [0,0,13,13]
     });
 };

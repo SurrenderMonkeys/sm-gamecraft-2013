@@ -51,6 +51,11 @@ Game.setupPlayerComponent = function(){
                 });
             });
 
+            this.onHit("Coin", function(data){
+                bitcoin = data[0].obj;
+                bitcoin.destroy();
+            });
+
             this.heartBar = [Crafty.e("2D, Canvas, Heart"),
                 Crafty.e("2D, Canvas, Heart"),
                 Crafty.e("2D, Canvas, Heart")
@@ -73,6 +78,13 @@ Game.setupPlayerComponent = function(){
             if(keyevent.keyCode === Crafty.keys.SPACE) { // they hit space
                 Crafty.e("2D, Canvas, Shot").attr({x:this.x+34, y:500, z:1}); // create a shot at our current position
             }
+        },
+
+        collectBitcoin: function(data) {
+            console.log(data);
+            component = data[0].obj;
+            console.log(component);
+            component.collect();
         }
     });
 
