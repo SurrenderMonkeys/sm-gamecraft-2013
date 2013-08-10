@@ -1,7 +1,7 @@
 Game = window.Game || {};
 
-Game.width = 2400;
-Game.height = 1600;
+Game.width = 1200;
+Game.height = 800;
 Game.tile_width = 20;
 Game.tile_height = 25;
 
@@ -167,9 +167,9 @@ Game.setupEngine = function () {
 
     Crafty.c("Boundaries", {
         init: function() {
-            for (var x = 0; x < Game.width; x++) {
-                for (var y = 0; y < Game.height; y++) {
-                    var at_edge = x == 0 || x == Game.width - 1 || y == 0 || y == Game.height - 1;
+            for (var x = 0; x < Game.width/Game.tile_width; x++) {
+                for (var y = 0; y < Game.height/Game.tile_height; y++) {
+                    var at_edge = x == 0 || x == (Game.width/Game.tile_width -1) || y == 0 || y == (Game.height/Game.tile_height - 1);
                     if (at_edge) {
                         Crafty.e('Boundary').at(x, y);
                     }
