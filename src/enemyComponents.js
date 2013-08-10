@@ -65,9 +65,9 @@ Game.setupEnemyComponents = function () {
 
     Crafty.c("FreedomCorp", {
         z: 3,
-        speed: 2,
-        dx: 2,
-        dy: 2,
+        speed: 1,
+        dx: 1,
+        dy: 1,
         range: 100,
         init: function () {
             var that = this;
