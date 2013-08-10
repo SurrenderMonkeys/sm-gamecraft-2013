@@ -65,9 +65,9 @@ Game.setupEnemyComponents = function () {
 
     Crafty.c("FreedomCorp", {
         z: 3,
-        speed: 2,
-        dx: 2,
-        dy: 2,
+        speed: 1,
+        dx: 1,
+        dy: 1,
         range: 100,
         init: function () {
             var that = this;
@@ -85,8 +85,15 @@ Game.setupEnemyComponents = function () {
                 that.onHit(componentName, function(collidingComponent){
                      var unit = that ;
 
-                            unit.dx = -unit.dx;
-                            unit.dy = -unit.dy;
+                           if (!that.sawSnowden){
+                               unit.dx = -unit.dx;
+                               unit.dy = -unit.dy;
+                           }
+                    else{
+                               unit.dx = (Math.random()*2 -1)*0.5;
+                               unit.dy = (Math.random()*2 -1)*0.5;
+                           }
+
                 });
             });
 
@@ -121,11 +128,13 @@ Game.setupEnemyComponents = function () {
 
 
           if(that.range > Math.sqrt( Math.pow(snowden.x - that.x,2)+Math.pow(snowden.y -that.y,2))){
+              that.sawSnowden = true;
              if(snowden.x > that.x) that.dx = that.speed ;
               else that.dx = -that.speed;
              if(snowden.y > that.y ) that.dy = that.speed;
               else that.dy = -that.speed;
           }
+            else that.sawSnowden = false;
         }
     });
 };
