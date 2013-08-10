@@ -7,6 +7,14 @@ Game.setupScore = function() {
       this.attr({ x: 10, y: 10, z:100});
       this.textColor("#ff0000");
       this.text("Score: " + 0);
+      this.css({
+        background: "#fff",
+        border: "1px solid #000",
+        fontSize: 28,
+        padding: 5,
+        position: "relative",
+        width: "auto"
+      });
     },
 
     update: function(value) {
