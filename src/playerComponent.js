@@ -9,6 +9,8 @@ Game.setupPlayerComponent = function(){
       init: function() {
         this.bind("guardian:open", this.handleComplete);
         this.open = false;
+
+        this.addComponent("Guardian");
       },
       handleComplete: function() {
         this.open = true;
@@ -45,8 +47,10 @@ Game.setupPlayerComponent = function(){
                           window.location("http://www.youtube.com/embed/qItugh-fFgg");
                         }
                     }
-                    that.x = 100;
-                    that.y = 50;
+
+                    that.x = Game.playerStart.x;
+                    that.y = Game.playerStart.y;
+
                 });
             });
 
@@ -146,21 +150,26 @@ Game.createPlayerComponent = function(playerStart){
         .animate('walk_left', [[9,0], [10,0], [11,0]])
         // .animate('walk_left',12, -1)
         .bind("KeyDown", function(e) {
-            if(e.keyCode === Crafty.keys.LEFT_ARROW || e.keyCode === Crafty.keys.A) {
-                if(!this.isPlaying("walk_left"))
-                    this.stop().animate("walk_left", 12, -1);
-            } else if(e.keyCode === Crafty.keys.RIGHT_ARROW || e.keyCode === Crafty.keys.D) {
-                if(!this.isPlaying("walk_right"))
-                    this.stop().animate("walk_right", 12, -1);
-            } else if(e.keyCode === Crafty.keys.UP_ARROW || e.keyCode === Crafty.keys.W) {
-                if(!this.isPlaying("walk_up"))
-                    this.stop().animate("walk_up", 12, -1);
-            } else if(e.keyCode === Crafty.keys.DOWN_ARROW || e.keyCode === Crafty.keys.S) {
-                if(!this.isPlaying("walk_down"))
-                    this.stop().animate("walk_down", 12, -1);
-            }
+            var element =this;
+
+            if(! element.keys ) element.keys = [];
+            element.keys.push(e);
+
+            Game.animateMoveElement(element,e);
+
         }).bind("KeyUp", function(e) {
-            this.stop();
+            var element = this;
+            _.each(element.keys,function(event,index){
+                if(e.keys === event.keys){
+                   element.keys.splice(index,1);
+                }
+            });
+           if(element.keys.length > 0)
+           {
+                   Game.animateMoveElement(element,element.keys[0]);
+           }
+
+            else element.stop();
         });
 
 }
