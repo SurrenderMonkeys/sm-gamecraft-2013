@@ -66,8 +66,9 @@ Game.setupEngine = function () {
 
         Crafty.e("2D, Canvas, Bitcoins");
 
-        // make alien entity (coordinates are set in component's init function)
-        Crafty.e("2D, Canvas, Alien");
+
+        Game.createAlienComponent();
+        Game.createFreedomCorpComponent().attr({x:200,y:300});
 
         Crafty.e("2D, Canvas, Wall");
 
