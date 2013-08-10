@@ -1,6 +1,11 @@
 var Game = window.Game || {};
 
 Game.loadSprites = function(){
+
+    Crafty.sprite(1, "./web/images/player.png", { // player base
+        PlayerPic: [0,0,57,71]
+    });
+
     Crafty.sprite(1, "./web/images/wall.png", {
         WallPic : [0,0,70,70]
     });
@@ -16,6 +21,14 @@ Game.loadSprites = function(){
     Crafty.sprite(1, "./web/images/bit.png", {
         BitsPic: [0,0,15,16]
     });
+
+    Crafty.sprite(1,"./web/images/Heart.png",{
+        HeartPic : [0,0,16,14]
+    });
+
+    Crafty.sprite(1,"./web/images/Skull.png",{
+        SkullPic : [0,0,33,47]
+    });
 };
 
 Game.setupEngine = function () {
@@ -29,11 +42,12 @@ Game.setupEngine = function () {
     Game.obstacles = ["Wall"];
     Game.evilComponents = ["Alien","Shot"];
 
-    Crafty.sprite(1, "./web/images/player.png", { // player base
-        PlayerPic: [0,0,57,71]
-    });
 
     Crafty.viewport.init(600, 400);
+
+    Crafty.c("Heart", {init: function(){this.addComponent("HeartPic");}})
+    Crafty.c("Skull", {init: function(){this.addComponent("SkullPic");}})
+
 
     // Player component - for handling moving player on screen
     Crafty.c("Snowden", {
@@ -51,9 +65,17 @@ Game.setupEngine = function () {
 
             //setup die collisions
             _.each(Game.evilComponents, function(componentName){
-                that.onHit(componentName, function(){
+                that.onHit(componentName, function(collidingComponent){
                     that.x = 0;
                     that.y = 0;
+
+                    that.heartBar.pop().destroy();
+
+                    if(that.heartBar.length<=0){
+                        Crafty.e("2D, Canvas, Skull").attr({x:that.x+21,y:that.y+21,z:that.z});
+                        that.destroy();
+                    }
+
                 });
             });
 
@@ -77,14 +99,28 @@ Game.setupEngine = function () {
             });
 
 
+            this.heartBar = [Crafty.e("2D, Canvas, Heart"),
+                Crafty.e("2D, Canvas, Heart"),
+                Crafty.e("2D, Canvas, Heart")
+            ];
+            this.heartBarOffset = {x: -8, y:-8};
+
         },
         handlebase: function() { // runs every frame
+            var that = this;
+
             if (this.x < 0) this.x = 0; // stop left
             if (this.x > 2390) this.x = 2390; // stop right
             if (this.y < 0 ) this.y = 0;
             if(this.y>1590) this.y= 1590;
             Crafty.viewport.scroll('_x', -(this.x + (this.w / 2) - (Crafty.viewport.width / 2) ));
             Crafty.viewport.scroll('_y', -(this.y + (this.h / 2) - (Crafty.viewport.height / 2) ));
+
+            _.each(this.heartBar,function(element,index){
+                element.x = that.x + index * 14 + that.heartBarOffset.x + that._movement.x;
+                element.y = that.y + that.heartBarOffset.y + that._movement.y;
+                element.z = that.z + 1;
+            });
         },
         handlekey: function(keyevent) { // handles key events
             if(keyevent.keyCode === Crafty.keys.SPACE) { // they hit space
@@ -184,17 +220,18 @@ Game.setupEngine = function () {
     // The following code sets up our scene
 
     Crafty.scene("game", function () { // the scene is called "game"
-
+        var playerStart = { x: 300, y: 500, z:5 };
         // set background
         Crafty.background("#FFF"); // this sets the background to a static image
 
         // make player entity
-        Crafty.e("2D, Canvas, Snowden").attr({ x: 300, y: 500, z:5 });
+        Crafty.e("2D, Canvas, Snowden").attr(playerStart);
 
         // make alien entity (coordinates are set in component's init function)
         Crafty.e("2D, Canvas, Alien");
 
         Crafty.e("2D, Canvas, Wall");
+
 
     }); // end of Crafty.scene function definition for "game" scene
 
