@@ -15,13 +15,13 @@ Game.setupPlayerComponent = function(){
       }
     });
 
-
     // Player component - for handling moving player on screen
     Crafty.c("Snowden", {
         dx: 0, // setting initial vertical speed - note variables are set differently here
 
         init: function() {
             var that = this;
+            var score = Crafty.e("Score");
             this.bind("EnterFrame",this.handlebase); // bind the EnterFrame event to the "handlebase" function below
             this.bind("KeyDown",this.handlekey); // bind the EnterFrame event to the "handlebase" function below
 
@@ -36,13 +36,13 @@ Game.setupPlayerComponent = function(){
                     that.heartBar.pop().destroy();
 
                     if(that.heartBar.length<=0){
-                        Crafty.trigger('game:over');
                         Crafty.e("2D, Canvas, Skull").attr({x:that.x+8,y:that.y+5,z:that.z-3});
                         that.destroy();
                     }
 
                     that.x = 21;
                     that.y = 26;
+
                 });
             });
 
@@ -72,27 +72,10 @@ Game.setupPlayerComponent = function(){
               }
             });
 
-            that.onHit("Guardian", function(obj) {
-              office = obj[0].obj;
-              if(office.open){
-                Crafty.trigger('game:won');
-              }
-            });
-
-            that.onHit("Document", function(doc){
-              if(that.documentCount < 5){
-                that.documentCount++;
-                doc[0].obj.destroy();
-              }
-
-              if(that.documentCount == 5){
-                Crafty.trigger('GuardianOpen');
-              }
-            });
-
             this.onHit("Coin", function(data){
                 bitcoin = data[0].obj;
                 bitcoin.destroy();
+                score.update(20);
             });
 
             this.heartBar = [Crafty.e("2D, Canvas, Heart"),
@@ -100,8 +83,6 @@ Game.setupPlayerComponent = function(){
                 Crafty.e("2D, Canvas, Heart")
             ];
             this.heartBarOffset = {x: -8, y:-8};
-
-            this.documentCount = 0;
 
         },
         handlebase: function() { // runs every frame
@@ -119,13 +100,14 @@ Game.setupPlayerComponent = function(){
             if(keyevent.keyCode === Crafty.keys.SPACE) { // they hit space
                 Crafty.e("2D, Canvas, Shot").attr({x:this.x+34, y:500, z:1}); // create a shot at our current position
             }
-        }
+        },
     });
 
 };
 
 Game.createPlayerComponent = function(playerStart){
-    Crafty.e("2D, Canvas, SpriteAnimation, Snowden")
+
+    return Crafty.e("2D, Canvas, SpriteAnimation, Snowden")
         .attr(playerStart)
         .animate('walk_up', 0, 0, 1)
         .animate('walk_up', [[0,0], [1,0], [2,0]])
@@ -156,4 +138,5 @@ Game.createPlayerComponent = function(playerStart){
         }).bind("KeyUp", function(e) {
             this.stop();
         });
+
 }

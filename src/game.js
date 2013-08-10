@@ -43,11 +43,12 @@ Game.setupEngine = function () {
     Game.setupEnvironmentComponents();
     Game.setupPlayerComponent();
     Game.setupEnemyComponents();
+    Game.setupScore();
 
     Game.components();
 
     Game.obstacles = ["Wall","Boundary"];
-    Game.evilComponents = ["Alien","Shot"];
+    Game.evilComponents = ["Alien","Shot","FreedomCorp"];
 
     Crafty.viewport.init(600, 400);
 
@@ -59,7 +60,8 @@ Game.setupEngine = function () {
         Crafty.background("#FFF"); // this sets the background to a static image
 
         // make player entity
-        Game.createPlayerComponent(playerStart);
+
+       Game.snowden = Game.createPlayerComponent(playerStart);
 
         // create boundaries
         Crafty.e("2D, Canvas, Boundaries");
@@ -68,12 +70,11 @@ Game.setupEngine = function () {
         Crafty.e("2D, Canvas, Documents");
 
         Game.createAlienComponent();
-        Game.createFreedomCorpComponent().attr({x:200,y:300});
+        Game.createFreedomCorpComponent().attr({x:100,y:100});
 
         Crafty.e("2D, Canvas, Guardian, Color, Solid").color('#ff0');
 
         Crafty.e("2D, Canvas, Wall");
-
 
     }); // end of Crafty.scene function definition for "game" scene
 

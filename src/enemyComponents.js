@@ -68,20 +68,28 @@ Game.setupEnemyComponents = function () {
         speed: 2,
         dx: 2,
         dy: 2,
+        range: 100,
         init: function () {
             var that = this;
             this.bind("EnterFrame", this.moveRandomly);
             this.addComponent("FreedomCorpPic");
-
+            this.addComponent("Collision");
 
             that.animate('walk_up', 0, 0, 2)    ;
-           // that  .animate('walk_up', [[1,0], [2,0], [3,0]])   ;
-            that   .animate('walk_right', 0, 1, 2)      ;
-          //  that   .animate('walk_right', [[4,0], [5,0], [6,0]])  ;
-            that   .animate('walk_down', 0, 2, 2)             ;
-           // that    .animate('walk_down', [[7,0], [8,0], [9,0]])   ;
-            that   .animate('walk_left', 0, 3, 2)   ;
-           // that  .animate('walk_left', [[10,0], [11,0], [12,0]]) ;
+            that.animate('walk_right', 0, 1, 2)      ;
+            that.animate('walk_down', 0, 2, 2)             ;
+            that.animate('walk_left', 0, 3, 2)   ;
+
+            //setup obstacle collisions
+            _.each(Game.obstacles, function(componentName){
+                that.onHit(componentName, function(collidingComponent){
+                     var unit = that ;
+
+                            unit.dx = -unit.dx;
+                            unit.dy = -unit.dy;
+                });
+            });
+
 
             setInterval(function () {
                 that.dx = Crafty.math.randomInt(-1, 1) * that.speed;
@@ -90,7 +98,8 @@ Game.setupEnemyComponents = function () {
             }, 1000);
         },
         moveRandomly: function () {
-            var that = this;
+            var that = this,
+                snowden = Game.snowden;
             this.x += this.dx;
             this.y += this.dy;
 
@@ -106,7 +115,17 @@ Game.setupEnemyComponents = function () {
             } else if(that.dy > 0) {
                 if(!that.isPlaying("walk_down"))
                     that.stop().animate("walk_down", 12, -1);
-            }
+            }else {
+                that.stop();
+            };
+
+
+          if(that.range > Math.sqrt( Math.pow(snowden.x - that.x,2)+Math.pow(snowden.y -that.y,2))){
+             if(snowden.x > that.x) that.dx = that.speed ;
+              else that.dx = -that.speed;
+             if(snowden.y > that.y ) that.dy = that.speed;
+              else that.dy = -that.speed;
+          }
         }
     });
 };
