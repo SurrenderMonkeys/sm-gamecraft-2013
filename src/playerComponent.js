@@ -32,6 +32,16 @@ Game.setupPlayerComponent = function(){
                 });
             });
 
+            _.each(Game.Lives, function(componentName){
+                that.onHit(componentName, function(collidingComponent){
+                  if(that.heartBar.length<3){
+                    that.heartBar.push(Crafty.e("2D, Canvas, Heart"));
+                    collidingComponent[0].obj.destroy();
+                  }
+                });
+            });
+
+
             //setup obstacle collisions
             _.each(Game.obstacles, function(componentName){
                 that.onHit(componentName, function(collidingComponent){
@@ -51,7 +61,8 @@ Game.setupPlayerComponent = function(){
                 });
             });
 
-            this.heartBar = [Crafty.e("2D, Canvas, Heart"),
+            this.heartBar = [
+                Crafty.e("2D, Canvas, Heart"),
                 Crafty.e("2D, Canvas, Heart"),
                 Crafty.e("2D, Canvas, Heart")
             ];
@@ -68,12 +79,12 @@ Game.setupPlayerComponent = function(){
                 element.y = that.y + that.heartBarOffset.y + that._movement.y;
                 element.z = that.z + 1;
             });
-        },
-        handlekey: function(keyevent) { // handles key events
-            if(keyevent.keyCode === Crafty.keys.SPACE) { // they hit space
-                Crafty.e("2D, Canvas, Shot").attr({x:this.x+34, y:500, z:1}); // create a shot at our current position
-            }
-        }
+        }//,
+        // handlekey: function(keyevent) { // handles key events
+        //     if(keyevent.keyCode === Crafty.keys.SPACE) { // they hit space
+        //         Crafty.e("2D, Canvas, Shot").attr({x:this.x+34, y:500, z:1}); // create a shot at our current position
+        //     }
+        // }
     });
 
 };
@@ -81,31 +92,23 @@ Game.setupPlayerComponent = function(){
 Game.createPlayerComponent = function(playerStart){
     Crafty.e("2D, Canvas, SpriteAnimation, Snowden")
         .attr(playerStart)
-        .animate('walk_up', 0, 0, 1)
         .animate('walk_up', [[0,0], [1,0], [2,0]])
-        // .animate('walk_up',12, -1)
-        .animate('walk_right', 0, 0, 1)
         .animate('walk_right', [[3,0], [4,0], [5,0]])
-        // .animate('walk_right',12, -1)
-        .animate('walk_down', 0, 0, 1)
         .animate('walk_down', [[6,0], [7,0], [8,0]])
-        // .animate('walk_down',12, -1)
-        .animate('walk_left', 0, 0, 1)
         .animate('walk_left', [[9,0], [10,0], [11,0]])
-        // .animate('walk_left',12, -1)
         .bind("KeyDown", function(e) {
             if(e.keyCode === Crafty.keys.LEFT_ARROW || e.keyCode === Crafty.keys.A) {
                 if(!this.isPlaying("walk_left"))
-                    this.stop().animate("walk_left", 12, -1);
+                    this.stop().animate("walk_left", 10, -1);
             } else if(e.keyCode === Crafty.keys.RIGHT_ARROW || e.keyCode === Crafty.keys.D) {
                 if(!this.isPlaying("walk_right"))
-                    this.stop().animate("walk_right", 12, -1);
+                    this.stop().animate("walk_right", 10, -1);
             } else if(e.keyCode === Crafty.keys.UP_ARROW || e.keyCode === Crafty.keys.W) {
                 if(!this.isPlaying("walk_up"))
-                    this.stop().animate("walk_up", 12, -1);
+                    this.stop().animate("walk_up", 10, -1);
             } else if(e.keyCode === Crafty.keys.DOWN_ARROW || e.keyCode === Crafty.keys.S) {
                 if(!this.isPlaying("walk_down"))
-                    this.stop().animate("walk_down", 12, -1);
+                    this.stop().animate("walk_down", 10, -1);
             }
         }).bind("KeyUp", function(e) {
             this.stop();
