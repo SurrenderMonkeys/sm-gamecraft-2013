@@ -58,7 +58,7 @@ Game.setupEngine = function () {
         Crafty.background("#FFF"); // this sets the background to a static image
 
         // make player entity
-       Game.createPlayerComponent(playerStart);
+       Game.snowden = Game.createPlayerComponent(playerStart);
 
         // create boundaries
         Crafty.e("2D, Canvas, Boundaries");

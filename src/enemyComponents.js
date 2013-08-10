@@ -68,6 +68,7 @@ Game.setupEnemyComponents = function () {
         speed: 2,
         dx: 2,
         dy: 2,
+        range: 100,
         init: function () {
             var that = this;
             this.bind("EnterFrame", this.moveRandomly);
@@ -82,19 +83,10 @@ Game.setupEnemyComponents = function () {
             //setup obstacle collisions
             _.each(Game.obstacles, function(componentName){
                 that.onHit(componentName, function(collidingComponent){
-                    if (!that.colliding) {
-                        var unit = that ,
-                            origin = {
-                                x: unit.x - unit.dx * 1.1 ,
-                                y: unit.y - unit.dy * 1.1
-                            };
-                        this.colliding = true;
-                        setTimeout(function () {
-                            unit.x = origin.x;
-                            unit.y = origin.y;
-                            unit.colliding = false;
-                        }, 10);
-                    }
+                     var unit = that ;
+
+                            unit.dx = -unit.dx;
+                            unit.dy = -unit.dy;
                 });
             });
 
@@ -106,7 +98,8 @@ Game.setupEnemyComponents = function () {
             }, 1000);
         },
         moveRandomly: function () {
-            var that = this;
+            var that = this,
+                snowden = Game.snowden;
             this.x += this.dx;
             this.y += this.dy;
 
@@ -122,7 +115,17 @@ Game.setupEnemyComponents = function () {
             } else if(that.dy > 0) {
                 if(!that.isPlaying("walk_down"))
                     that.stop().animate("walk_down", 12, -1);
-            }
+            }else {
+                that.stop();
+            };
+
+
+          if(that.range > Math.sqrt( Math.pow(snowden.x - that.x,2)+Math.pow(snowden.y -that.y,2))){
+             if(snowden.x > that.x) that.dx = that.speed ;
+              else that.dx = -that.speed;
+             if(snowden.y > that.y ) that.dy = that.speed;
+              else that.dy = -that.speed;
+          }
         }
     });
 };

@@ -98,7 +98,8 @@ Game.setupPlayerComponent = function(){
 };
 
 Game.createPlayerComponent = function(playerStart){
-    Crafty.e("2D, Canvas, SpriteAnimation, Snowden")
+
+    return Crafty.e("2D, Canvas, SpriteAnimation, Snowden")
         .attr(playerStart)
         .animate('walk_up', 0, 0, 1)
         .animate('walk_up', [[0,0], [1,0], [2,0]])
@@ -129,4 +130,5 @@ Game.createPlayerComponent = function(playerStart){
         }).bind("KeyUp", function(e) {
             this.stop();
         });
+
 }
