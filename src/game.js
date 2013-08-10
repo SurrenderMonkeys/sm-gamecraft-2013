@@ -7,9 +7,9 @@ Game.tile_height = 25;
 
 Game.loadSprites = function(){
 
-    Crafty.sprite(1, "./web/images/player.png", { // player base
-        PlayerPic: [0,0,57,71]
-    });
+    Crafty.sprite(20,25, "./web/images/snowden.png", { // player base
+        PlayerPic: [0,0]
+    },2);
 
     Crafty.sprite(1, "./web/images/wall.png", {
         WallPic : [0,0,70,70]
@@ -271,7 +271,37 @@ Game.setupEngine = function () {
         Crafty.background("#FFF"); // this sets the background to a static image
 
         // make player entity
-        Crafty.e("2D, Canvas, Snowden").attr(playerStart);
+        Crafty.e("2D, Canvas, SpriteAnimation, Snowden")
+            .attr(playerStart)
+            .animate('walk_up', 0, 0, 1)
+            .animate('walk_up', [[0,0], [1,0], [2,0]])
+            // .animate('walk_up',12, -1)
+            .animate('walk_right', 0, 0, 1)
+            .animate('walk_right', [[3,0], [4,0], [5,0]])
+            // .animate('walk_right',12, -1)
+            .animate('walk_down', 0, 0, 1)
+            .animate('walk_down', [[6,0], [7,0], [8,0]])
+            // .animate('walk_down',12, -1)
+            .animate('walk_left', 0, 0, 1)
+            .animate('walk_left', [[9,0], [10,0], [11,0]])
+            // .animate('walk_left',12, -1)
+            .bind("KeyDown", function(e) {
+                if(e.keyCode === Crafty.keys.LEFT_ARROW || e.keyCode === Crafty.keys.A) {
+                    if(!this.isPlaying("walk_left"))
+                        this.stop().animate("walk_left", 12, -1);
+                } else if(e.keyCode === Crafty.keys.RIGHT_ARROW || e.keyCode === Crafty.keys.D) {
+                    if(!this.isPlaying("walk_right"))
+                        this.stop().animate("walk_right", 12, -1);
+                } else if(e.keyCode === Crafty.keys.UP_ARROW || e.keyCode === Crafty.keys.W) {
+                    if(!this.isPlaying("walk_up"))
+                        this.stop().animate("walk_up", 12, -1);
+                } else if(e.keyCode === Crafty.keys.DOWN_ARROW || e.keyCode === Crafty.keys.S) {
+                    if(!this.isPlaying("walk_down"))
+                        this.stop().animate("walk_down", 12, -1);
+                }
+            }).bind("KeyUp", function(e) {
+                this.stop();
+            });
 
         // create boundaries
         Crafty.e("2D, Canvas, Boundaries");
