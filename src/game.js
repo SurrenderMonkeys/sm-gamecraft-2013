@@ -103,7 +103,7 @@ Game.setupEngine = function () {
                     that.heartBar.pop().destroy();
 
                     if(that.heartBar.length<=0){
-                        Crafty.e("2D, Canvas, Skull").attr({x:that.x+8,y:that.y+5,z:that.z});
+                        Crafty.e("2D, Canvas, Skull").attr({x:that.x+8,y:that.y+5,z:that.z-3});
                         that.destroy();
                     }
 
@@ -196,6 +196,7 @@ Game.setupEngine = function () {
     Crafty.c("Alien", {
         y: -100, // setting initial vertical speed - note variables are set differently here
         x: 50,
+        z:3,
         dx: 6,
 
         init: function() {  // init function is automatically run when entity with this component is created
