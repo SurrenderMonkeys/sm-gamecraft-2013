@@ -28,7 +28,6 @@ Game.setupEngine = function () {
 
     Game.obstacles = ["Wall"];
     Game.evilComponents = ["Alien","Shot"];
-    Game.goodComponents = ["Bits"];
 
     Crafty.sprite(1, "./web/images/player.png", { // player base
         PlayerPic: [0,0,57,71]
