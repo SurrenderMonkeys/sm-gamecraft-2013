@@ -76,12 +76,11 @@ Game.setupEngine = function () {
                 });
             });
 
+
         },
         handlebase: function() { // runs every frame
-            if (this.x < 0) this.x = 0; // stop left
-            if (this.x > 520) this.x = 520; // stop right
-            if (this.y < 0 ) this.y = 0;
-            if(this.y>520) this.y= 520;
+            Crafty.viewport.x = - this.x + 300;
+            Crafty.viewport.y = - this.y + 200;
         },
         handlekey: function(keyevent) { // handles key events
             if(keyevent.keyCode === Crafty.keys.SPACE) { // they hit space
