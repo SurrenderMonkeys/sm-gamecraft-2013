@@ -24,7 +24,7 @@ Game.setupEnvironmentComponents = function(){
 
     Crafty.c("Documents", {
         init: function(){
-          var positions = [{x:400,y:100},{x:1100,y:100},{x:240,y:700},{x:1000,y:750},{x:500,y:500}];
+          var positions = [{x:430,y:180},{x:1145,y:100},{x:240,y:650},{x:850,y:680},{x:500,y:450}];
 
           for (var i = positions.length - 1; i >= 0; i--) {
             pos = positions[i];
