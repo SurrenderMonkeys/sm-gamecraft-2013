@@ -34,6 +34,10 @@ Game.loadSprites = function(){
     Crafty.sprite(1,"./web/images/Skull.png",{
         SkullPic : [0,0,57,17]
     });
+
+    Crafty.sprite(1,"./web/collectable/bitcoin.png", {
+        Bitcoin : [0,0,13,13]
+    });
 };
 
 Game.components = function(){
@@ -178,6 +182,19 @@ Game.setupEngine = function () {
         }
     });
 
+    Crafty.c("Bitcoins", {
+            init: function() {
+                for (var i = 0; i < Game.height/Game.tile_height; i++) {
+                  for (var j = 0; j < Game.width/Game.tile_width; j++) {
+                    if (i > 0 && i < Game.height/Game.tile_height && j > 0 && j < Game.width/Game.tile_width && Math.random() < 0.01) {
+                      Crafty.e("2D, DOM, Bitcoin")
+                        .attr({x: j * 16, y: i * 16});
+                    }
+                }
+            }
+        }
+    });
+
     // Shot component - for handling shots
     Crafty.c("Shot", {
         dy: 0, // setting initial vertical speed - note variables are set differently here
@@ -306,6 +323,8 @@ Game.setupEngine = function () {
 
         // create boundaries
         Crafty.e("2D, Canvas, Boundaries");
+
+        Crafty.e("2D, Canvas, Bitcoins");
 
         // make alien entity (coordinates are set in component's init function)
         Crafty.e("2D, Canvas, Alien");
